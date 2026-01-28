@@ -209,7 +209,7 @@ Dự án được phát triển dựa trên đề tài của **CNTT 15-01** (kh�
 ## 🏗️ KIẾN TRÚC HỆ THỐNG
 
 <p align="center">
-  <img src="images/sodo.png" alt="System Architecture" width="800"/>
+  <img src="images/sodo.png" alt="System Architecture" width="100%"/>
 </p>
 
 
@@ -927,7 +927,7 @@ bao_cao_luong           (20 fields - SQL View)
 
 ## 📰 Poster
 <p align="center">
-  <img src="images/poster.jpg" alt="System Architecture" width="800"/>
+  <img src="images/poster.jpg" alt="System Architecture" width="100%"/>
 </p>
 
 ## 🤝 Đóng góp
