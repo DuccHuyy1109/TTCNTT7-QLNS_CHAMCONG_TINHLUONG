@@ -3,7 +3,8 @@
 <div align="center">
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/odoo/odoo/15.0/addons/hr/static/description/icon.png" alt="HR Management" width="200"/>
+  <img src="images/logoDaiNam.png" alt="DaiNam University Logo" width="200"/>
+  <img src="images/LogoAIoTLab.png" alt="AIoTLab Logo" width="170"/>
 </p>
 
 [![Made with Odoo](https://img.shields.io/badge/Made%20with-Odoo%2015-714B67?style=for-the-badge&logo=odoo)](https://www.odoo.com)
