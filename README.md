@@ -3,7 +3,8 @@
 <div align="center">
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/odoo/odoo/15.0/addons/hr/static/description/icon.png" alt="HR Management" width="200"/>
+  <img src="images/logoDaiNam.png" alt="DaiNam University Logo" width="200"/>
+  <img src="images/LogoAIoTLab.png" alt="AIoTLab Logo" width="170"/>
 </p>
 
 [![Made with Odoo](https://img.shields.io/badge/Made%20with-Odoo%2015-714B67?style=for-the-badge&logo=odoo)](https://www.odoo.com)
@@ -207,27 +208,10 @@ Dự án được phát triển dựa trên đề tài của **CNTT 15-01** (kh�
 
 ## 🏗️ KIẾN TRÚC HỆ THỐNG
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    ODOO 15 FRAMEWORK                        │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐    │
-│  │   MODULE 1   │  │   MODULE 2   │  │   MODULE 3   │    │
-│  │   Nhân sự    │──│  Chấm công   │──│  Tính lương  │    │
-│  │ (10 models)  │  │  (7 models)  │  │  (7 models)  │    │
-│  └──────────────┘  └──────────────┘  └──────────────┘    │
-│         │                  │                  │            │
-│         └──────────────────┴──────────────────┘            │
-│                            │                               │
-├────────────────────────────┼───────────────────────────────┤
-│                    POSTGRESQL 13+                          │
-│              (24 models, 300+ fields)                      │
-└─────────────────────────────────────────────────────────────┘
+<p align="center">
+  <img src="images/sodo.png" alt="System Architecture" width="100%"/>
+</p>
 
-WORKFLOW:
-Nhân sự (Hợp đồng) → Chấm công (Tổng hợp) → Tính lương (Bảng lương)
-```
 
 ### Quan hệ giữa các modules:
 
@@ -909,139 +893,6 @@ View Graph (Biểu đồ):
 
 ---
 
-## ⚙️ Cấu hình & Ghi chú
-
-### 1. Cấu hình database
-
-**File:** `odoo.conf`
-```ini
-[options]
-db_host = localhost
-db_port = 5432
-db_user = odoo
-db_password = odoo
-db_name = odoo_hrms
-```
-
-### 2. Cấu hình addons path
-
-```ini
-addons_path = /path/to/odoo/addons,/path/to/custom/addons
-```
-
-### 3. Phân quyền người dùng
-
-**User Groups:**
-- **HR Manager:** Quản lý tất cả modules
-- **HR Officer:** Quản lý nhân sự và chấm công
-- **Accountant:** Chỉ xem và tính lương
-- **Employee:** Chỉ xem thông tin cá nhân
-
-**Cấu hình:**
-```
-Settings > Users & Companies > Users
-→ Chọn user → Edit → Tab "Access Rights"
-```
-
-### 4. Backup và Restore
-
-**Backup database:**
-```bash
-pg_dump -U odoo odoo_hrms > backup.sql
-```
-
-**Restore database:**
-```bash
-psql -U odoo -d odoo_hrms < backup.sql
-```
-
-### 5. Các lưu ý quan trọng
-
-⚠️ **Dependencies:**
-- Module Chấm công cần Module Nhân sự
-- Module Tính lương cần cả Module Nhân sự và Chấm công
-- Phải cài đặt đúng thứ tự!
-
-⚠️ **Dữ liệu:**
-- Phải tạo Hợp đồng trước khi tính lương
-- Phải tạo Tổng hợp công trước khi tính lương
-- Mỗi nhân viên chỉ có 1 tổng hợp công/tháng
-
-⚠️ **Constraint:**
-- Không thể xóa Phòng ban đang có nhân viên
-- Không thể xóa Nhân viên đã có bảng lương
-- Mỗi nhân viên chỉ đăng ký 1 ca/ngày
-
----
-
-## 🐛 Xử lý lỗi thường gặp
-
-### 1. Lỗi kết nối database
-
-**Triệu chứng:**
-```
-FATAL: database "odoo_hrms" does not exist
-```
-
-**Giải pháp:**
-```bash
-createdb odoo_hrms
-```
-
-### 2. Lỗi import module
-
-**Triệu chứng:**
-```
-ModuleNotFoundError: No module named 'xxx'
-```
-
-**Giải pháp:**
-```bash
-pip install xxx
-```
-
-### 3. Lỗi "Unknown field state"
-
-**Triệu chứng:**
-```
-for modifier "readonly": Unknown field state in domain
-```
-
-**Giải pháp:**
-```bash
-# 1. Upgrade module
-Apps > Tìm module > Upgrade
-
-# 2. Clear cache
-Ctrl + Shift + R
-
-# 3. Xóa .pyc files
-find . -name "*.pyc" -delete
-```
-
-### 4. Số ngày làm việc = 0
-
-**Triệu chứng:**
-Bảng lương có số ngày = 0
-
-**Giải pháp:**
-1. Kiểm tra đã tạo Tổng hợp công chưa
-2. Kiểm tra đã chấm công đủ ngày chưa
-3. Click "Tính lại" trong Tổng hợp công
-
-### 5. Lỗi thêm thưởng/tăng ca
-
-**Triệu chứng:**
-```
-Trường Loại (loai) bắt buộc
-```
-
-**Giải pháp:**
-1. Upgrade module `tinh_luong`
-2. Clear browser cache
-3. Đảm bảo click "Add a line" đúng tab
-
----
 
 ## 📊 Schema Database
 
@@ -1074,88 +925,10 @@ cau_hinh_luong          (10 fields)
 bao_cao_luong           (20 fields - SQL View)
 ```
 
-### Relationships
-
-```sql
--- Nhân viên 1-N Hợp đồng
-hop_dong_lao_dong.nhan_vien_id → nhan_vien.id
-
--- Nhân viên 1-N Chấm công
-bang_cham_cong.nhan_vien_id → nhan_vien.id
-
--- Nhân viên 1-1 Tổng hợp công (per month)
-tong_hop_cong_thang.nhan_vien_id → nhan_vien.id
-UNIQUE (nhan_vien_id, thang, nam)
-
--- Nhân viên 1-1 Bảng lương (per month)
-bang_luong.nhan_vien_id → nhan_vien.id
-UNIQUE (nhan_vien_id, thang, nam)
-
--- Bảng lương N-1 Tổng hợp công
-bang_luong.tong_hop_cong_id → tong_hop_cong_thang.id
-
--- Bảng lương 1-N Chi tiết lương
-chi_tiet_luong.bang_luong_id → bang_luong.id
-```
-
----
-
-## 📈 Các chỉ số đánh giá
-
-### Performance
-- Thời gian tính lương: < 2 giây
-- Thời gian tổng hợp công: < 3 giây
-- Tải trang trung bình: < 1 giây
-- Database size: ~50MB (cho 100 nhân viên/năm)
-
-### Code Quality
-- Total Models: 24
-- Total Fields: 300+
-- Total Views: 40+
-- Lines of Code: ~5000
-- Test Coverage: Manual testing
-
-### Features Implemented
-- ✅ CRUD operations: 100%
-- ✅ Computed fields: 100%
-- ✅ Constraints: 100%
-- ✅ Workflows: 100%
-- ✅ Reports: 100%
-- ✅ Localization: 100% Vietnamese
-
----
-
-## 🎥 Video Demo
-
-🎬 **Link video demo:** [YouTube/Google Drive] (Nếu có)
-
-**Nội dung video:**
-1. Giới thiệu hệ thống (2 phút)
-2. Demo quản lý nhân sự (3 phút)
-3. Demo chấm công (3 phút)
-4. Demo tính lương (5 phút)
-5. Demo báo cáo (2 phút)
-6. Kết luận (1 phút)
-
----
-
-## 📚 Tài liệu tham khảo
-
-### Odoo Documentation
-- [Odoo 15 Official Docs](https://www.odoo.com/documentation/15.0/)
-- [Odoo ORM API](https://www.odoo.com/documentation/15.0/developer/reference/backend/orm.html)
-- [Odoo Views](https://www.odoo.com/documentation/15.0/developer/reference/backend/views.html)
-
-### Python & PostgreSQL
-- [Python 3.8+ Docs](https://docs.python.org/3/)
-- [PostgreSQL 13 Docs](https://www.postgresql.org/docs/13/)
-
-### Quy định Việt Nam
-- Luật Lao động 2019
-- Thông tư 111/2013/TT-BTC (Thuế TNCN)
-- Quyết định 595/QĐ-BHXH (Bảo hiểm xã hội)
-
----
+## 📰 Poster
+<p align="center">
+  <img src="images/poster.jpg" alt="System Architecture" width="100%"/>
+</p>
 
 ## 🤝 Đóng góp
 
@@ -1249,48 +1022,7 @@ Hệ thống quản lý nhân sự cơ bản
 </tr>
 </table>
 
-### Công cụ sử dụng
 
-| Công cụ | Mục đích |
-|---------|----------|
-| **VS Code** | IDE chính |
-| **Git** | Version control |
-| **PostgreSQL** | Database |
-| **DBeaver** | Database management |
-| **Postman** | API testing |
-| **GitHub** | Repository hosting |
-| **Overleaf** | Viết báo cáo LaTeX |
-| **PowerPoint** | Presentation |
-
----
-
-## 📄 License
-
-Dự án này được phát hành dưới giấy phép **MIT License**.
-
-```
-MIT License
-
-Copyright (c) 2025 Nhóm 11 - CNTT 16-05
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
 
 ---
 
@@ -1309,10 +1041,9 @@ SOFTWARE.
 
 ### Giảng viên hướng dẫn
 
-**[Tên giảng viên]**  
-Email: [email@dainam.edu.vn]  
-Bộ môn: Hệ thống thông tin
-
+**[ThS. Lê Tuấn Anh]**   
+**[Ths. Nguyễn Thế Huy Hoàng]**   
+Bộ môn: Thực tập doanh nghiệp
 ---
 
 ## 🎯 Kế hoạch phát triển
@@ -1341,25 +1072,14 @@ Bộ môn: Hệ thống thông tin
 
 <div align="center">
 
-## 🎓 ĐẠI HỌC ĐẠI NAM
-
-**Khoa Công nghệ thông tin**  
-**Bộ môn Hệ thống thông tin**
-
-**Bài tập lớn cuối kỳ**  
-**Môn: Hệ thống thông tin quản lý**
-
-**Học kỳ II - Năm học 2024-2025**
-
----
 
 ### 👨‍🎓 Nhóm 11 - Lớp CNTT 16-05
 
-| STT | Họ và tên | MSSV | Vai trò |
+| STT | Họ và tên | MSV | Vai trò |
 |-----|-----------|------|---------|
-| 1 | **Chu Văn Huy** | 2021xxxxxxx | Trưởng nhóm |
-| 2 | Phạm Ngọc Minh | 2021xxxxxxx | Thành viên |
-| 3 | Nguyễn Thành Trung | 2021xxxxxxx | Thành viên |
+| 1 | **Chu Văn Huy** | 1671020136 | Trưởng nhóm |
+| 2 | Phạm Ngọc Minh | 1671020205 | Thành viên |
+| 3 | Nguyễn Thành Trung | 1671020327 | Thành viên |
 
 ---
 
